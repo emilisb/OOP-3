@@ -48,7 +48,7 @@ vector<Student> getStudents(bool useRandom) {
 
     while (filling) {
         Student student;
-        cout << "Vardas: ";
+        cout << "Vardas (arba /q jeigu norite baigti vesti duomenis): ";
         cin >> student.firstName;
         if (student.firstName != EXIT_COMMAND) {
             cout << endl << "Pavardė: ";
@@ -74,7 +74,7 @@ vector<Student> getStudents(bool useRandom) {
                 bool fillingHomework = true;
 
                 while (fillingHomework) {
-                    cout << endl << "Namų darbų rez.: ";
+                    cout << endl << "Namų darbų rez. (arba 0 jei norite baigti vesti duomenis): ";
                     cin >> homeworkResult;
                     if (cin.fail()) {
                         // discard 'bad' character(s)

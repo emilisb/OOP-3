@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <iomanip>
 #include <random>
+#include <fstream>
 
 using std::cout;
 using std::cin;
@@ -82,6 +83,41 @@ vector<Student> getStudents(bool useRandom) {
             filling = false;
         }
     }
+    
+    return students;
+}
+
+vector<Student> getStudentsFromFile(string filename) {
+    vector<Student> students;
+    
+    std::ifstream file(filename);
+    if (!file.fail()) {
+        string tempLine;
+        std::getline(file, tempLine); // ignore first line
+        
+        while (!file.eof()) {
+            Student student;
+            file >> student.firstName >> student.lastName;
+        
+            if (student.firstName == "") {
+                break;
+            }
+            
+            int result;
+            for (int i = 0; i < 5; i++) {
+                file >> result;
+                student.homeworkResults.push_back(result);
+            }
+            
+            file >> student.examResult;
+            
+            students.push_back(student);
+        }
+    } else {
+        cout << "Failo skaitymo klaida!" << endl;
+    }
+    
+    file.close();
     
     return students;
 }
@@ -205,6 +241,25 @@ bool getUseRandom() {
     return input == 't';
 }
 
+bool getUseFile() {
+    char input = '\0';
+    
+    while (input != 't' && input != 'n') {
+        cout
+        << "Ar norite naudoti duomenų failą?" << endl
+        << "t - taip" << endl
+        << "n - ne" << endl;
+        cin >> input;
+        
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+    }
+    
+    return input == 't';
+}
+
 bool compareByFirstName(const Student &a, const Student &b) {
     return a.firstName < b.firstName;
 }
@@ -214,8 +269,16 @@ void sortByName(vector<Student> &students) {
 }
 
 int main(int argc, const char * argv[]) {
-    bool useRandom = getUseRandom();
-    vector<Student> students = getStudents(useRandom);
+    bool useFile = getUseFile();
+    vector<Student> students;
+    
+    if (useFile) {
+        students = getStudentsFromFile("kursiokai.txt");
+    } else {
+        bool useRandom = getUseRandom();
+        students = getStudents(useRandom);
+    }
+    
     char mode = getMode();
     
     if (mode == 'v') {

@@ -20,8 +20,6 @@ using std::vector;
 
 #define EXIT_COMMAND "/q"
 
-#define USE_ARRAY true
-
 struct Student {
 	string firstName;
 	string lastName;
@@ -207,6 +205,14 @@ bool getUseRandom() {
 	return input == 't';
 }
 
+bool compareByFirstName(const Student &a, const Student &b) {
+	return a.firstName < b.firstName;
+}
+
+void sortByName(vector<Student> &students) {
+	std::sort(students.begin(), students.end(), compareByFirstName);
+}
+
 int main(int argc, const char * argv[]) {
 	bool useRandom = getUseRandom();
 	vector<Student> students = getStudents(useRandom);
@@ -218,6 +224,7 @@ int main(int argc, const char * argv[]) {
 		calculateMedian(students);
 	}
 
+	sortByName(students);
 	printResults(students, mode);
 
 	return 0;

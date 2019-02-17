@@ -1,9 +1,10 @@
 CXX = clang++
 CC = clang
 
-array:	main_array
+main:	main
 
-vector:	main_vector
+test: main
+	./main
 
 clean:
-	rm -f *.o main_array main_vector
+	rm -f *.o main

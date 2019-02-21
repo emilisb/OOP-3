@@ -8,10 +8,13 @@
 
 #include <iostream>
 #include <vector>
-#include <algorithm>
 #include <iomanip>
 #include <random>
 #include <fstream>
+
+#include "StudentCollection.hpp"
+#include "Student.hpp"
+#include "ConsoleInput.hpp"
 
 using std::cout;
 using std::cin;
@@ -20,14 +23,6 @@ using std::string;
 using std::vector;
 
 #define EXIT_COMMAND "/q"
-
-struct Student {
-    string firstName;
-    string lastName;
-    vector<unsigned int> homeworkResults;
-    unsigned int examResult = 0;
-    double finalResult = 0;
-};
 
 vector<Student> getStudents(bool useRandom) {
     vector<Student> students;
@@ -98,7 +93,7 @@ vector<Student> getStudentsFromFile(string filename) {
         while (!file.eof()) {
             Student student;
             file >> student.firstName >> student.lastName;
-        
+            
             if (student.firstName == "") {
                 break;
             }
@@ -122,29 +117,9 @@ vector<Student> getStudentsFromFile(string filename) {
     return students;
 }
 
-int maxFirstNameLength(const vector<Student> &students) {
-    int length = 6; // default value is length of string "Vardas"
-    
-    for (auto &student : students) {
-        length = std::max(static_cast<int>(student.firstName.length()), length);
-    }
-    
-    return length + 3;
-}
-
-int maxLastNameLength(const vector<Student> &students) {
-    int length = 7; // default value is length of string "Pavarde"
-    
-    for (auto &student : students) {
-        length = std::max(static_cast<int>(student.lastName.length()), length);
-    }
-    
-    return length + 3;
-}
-
-void printResults(const vector<Student> &students, char mode) {
-    int firstNameLength = maxFirstNameLength(students);
-    int lastNameLength = maxLastNameLength(students);
+void printResults(StudentCollection collection, char mode) {
+    int firstNameLength = collection.maxFirstNameLength();
+    int lastNameLength = collection.maxLastNameLength();
     string modeLabel = (mode == 'v' ? "Vid." : "Med.");
     string finalResultLabel = "Galutinis (" + modeLabel + ")";
     
@@ -158,7 +133,7 @@ void printResults(const vector<Student> &students, char mode) {
     
     cout << separator << endl;
     
-    for (auto &student : students) {
+    for (auto &student : collection.students) {
         cout << std::left
         << std::setw(firstNameLength) << student.firstName
         << std::setw(lastNameLength) << student.lastName
@@ -186,109 +161,28 @@ char getMode() {
     return mode;
 }
 
-void calculateAverage(vector<Student> &students) {
-    for (auto &student : students) {
-        unsigned int sum = 0;
-        double average = 0;
-        
-        if (!student.homeworkResults.empty()) {
-            for (int i = 0; i < student.homeworkResults.size(); i++) {
-                sum += student.homeworkResults.at(i);
-            }
-            
-            average = (double)sum / student.homeworkResults.size();
-        }
-        
-        student.finalResult = 0.4 * average + 0.6 * student.examResult;
-    }
-}
-
-void calculateMedian(vector<Student> &students) {
-    for (auto &student : students) {
-        double median = 0;
-        
-        if (!student.homeworkResults.empty()) {
-            int results = student.homeworkResults.size();
-            std::sort(student.homeworkResults.begin(), student.homeworkResults.end());
-            
-            if (results % 2 != 0) {
-                median = student.homeworkResults.at(results/2);
-            } else {
-                median = (double)(student.homeworkResults.at((results-1)/2) + student.homeworkResults.at(results/2))/2.0;
-            }
-        }
-        
-        student.finalResult = 0.4 * median + 0.6 * student.examResult;
-    }
-}
-
-bool getUseRandom() {
-    char input = '\0';
-    
-    while (input != 't' && input != 'n') {
-        cout
-        << "Ar norite naudoti atsitiktinius pažymius?" << endl
-        << "t - taip" << endl
-        << "n - ne" << endl;
-        cin >> input;
-        
-        if (cin.fail()) {
-            cin.clear();
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        }
-    }
-    
-    return input == 't';
-}
-
-bool getUseFile() {
-    char input = '\0';
-    
-    while (input != 't' && input != 'n') {
-        cout
-        << "Ar norite naudoti duomenų failą?" << endl
-        << "t - taip" << endl
-        << "n - ne" << endl;
-        cin >> input;
-        
-        if (cin.fail()) {
-            cin.clear();
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        }
-    }
-    
-    return input == 't';
-}
-
-bool compareByFirstName(const Student &a, const Student &b) {
-    return a.firstName < b.firstName;
-}
-
-void sortByName(vector<Student> &students) {
-    std::sort(students.begin(), students.end(), compareByFirstName);
-}
-
 int main(int argc, const char * argv[]) {
-    bool useFile = getUseFile();
-    vector<Student> students;
+    StudentCollection collection;
+    
+    bool useFile = ConsoleInput::getBool("Ar norite skaityti pažymius iš failo?");
     
     if (useFile) {
-        students = getStudentsFromFile("kursiokai.txt");
+        collection.students = getStudentsFromFile("kursiokai.txt");
     } else {
-        bool useRandom = getUseRandom();
-        students = getStudents(useRandom);
+        bool useRandom = ConsoleInput::getBool("Ar norite naudoti atsitiktinius pažymius?");
+        collection.students = getStudents(useRandom);
     }
     
     char mode = getMode();
     
     if (mode == 'v') {
-        calculateAverage(students);
+        collection.calculateAverage();
     } else if (mode == 'm') {
-        calculateMedian(students);
+        collection.calculateMedian();
     }
     
-    sortByName(students);
-    printResults(students, mode);
+    collection.sortByName();
+    printResults(collection, mode);
     
     return 0;
 }

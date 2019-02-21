@@ -17,7 +17,6 @@
 #include "ConsoleInput.hpp"
 
 using std::cout;
-using std::cin;
 using std::endl;
 using std::string;
 using std::vector;
@@ -32,11 +31,9 @@ vector<Student> getStudents(bool useRandom) {
     
     while (filling) {
         Student student;
-        cout << "Vardas (arba /q jeigu norite baigti vesti duomenis): ";
-        cin >> student.firstName;
+        student.firstName = ConsoleInput::getStringWithQuestion("Vardas (arba /q jeigu norite baigti vesti duomenis):");
         if (student.firstName != EXIT_COMMAND) {
-            cout << endl << "Pavardė: ";
-            cin >> student.lastName;
+            student.lastName = ConsoleInput::getStringWithQuestion("Pavardė:");
             
             if (useRandom) {
                 std::random_device rd; // obtain a random number from hardware
@@ -54,23 +51,15 @@ vector<Student> getStudents(bool useRandom) {
                 bool fillingHomework = true;
                 
                 while (fillingHomework) {
-                    cout << endl << "Namų darbų rez. (arba 0 jei norite baigti vesti duomenis): ";
-                    cin >> homeworkResult;
-                    if (cin.fail()) {
-                        // discard 'bad' character(s)
-                        cin.clear();
-                        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                        cout << "Bad input!" << endl;
-                    } else if (homeworkResult != 0) {
+                    homeworkResult = ConsoleInput::getIntegerWithQuestion("Namų darbų rez. (arba 0 jei norite baigti vesti duomenis):");
+                    if (homeworkResult != 0) {
                         student.homeworkResults.push_back(homeworkResult);
                     } else {
                         fillingHomework = false;
                     }
                 }
                 
-                cout << endl << "Egzamino rez.: ";
-                cin >> student.examResult;
-                cout << endl;
+                student.examResult = ConsoleInput::getIntegerWithQuestion("Egzamino rez:");
             }
             
             students.push_back(student);
@@ -142,38 +131,19 @@ void printResults(StudentCollection collection, char mode) {
     }
 }
 
-char getMode() {
-    char mode = '\0';
-    
-    while (mode != 'm' && mode != 'v') {
-        cout
-        << "Ar norite naudoti vidurkį (v) ar medianą (m)?" << endl
-        << "v - vidurkį" << endl
-        << "m - medianą" << endl;
-        cin >> mode;
-        
-        if (cin.fail()) {
-            cin.clear();
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        }
-    }
-    
-    return mode;
-}
-
 int main(int argc, const char * argv[]) {
     StudentCollection collection;
     
-    bool useFile = ConsoleInput::getBool("Ar norite skaityti pažymius iš failo?");
+    bool useFile = ConsoleInput::getBoolWithQuestion("Ar norite skaityti pažymius iš failo?");
     
     if (useFile) {
         collection.students = getStudentsFromFile("kursiokai.txt");
     } else {
-        bool useRandom = ConsoleInput::getBool("Ar norite naudoti atsitiktinius pažymius?");
+        bool useRandom = ConsoleInput::getBoolWithQuestion("Ar norite naudoti atsitiktinius pažymius?");
         collection.students = getStudents(useRandom);
     }
     
-    char mode = getMode();
+    char mode = ConsoleInput::getCharWithQuestion("Ar norite naudoti vidurkį ar medianą?", "vidurkį", "medianą", 'v', 'm');
     
     if (mode == 'v') {
         collection.calculateAverage();

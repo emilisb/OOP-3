@@ -9,15 +9,21 @@
 #ifndef StudentCollection_hpp
 #define StudentCollection_hpp
 
+#define HOMEWORK_RESULTS 5
+
 #include <vector>
+#include <string>
+
 #include "Student.hpp"
 
 using std::vector;
+using std::string;
 
 class StudentCollection {
 public:
     vector<Student> students;
     
+    void loadFromFile(string filename);
     void sortByName();
     void calculateMedian();
     void calculateAverage();

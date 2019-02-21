@@ -13,7 +13,6 @@
 #include <fstream>
 
 #include "StudentCollection.hpp"
-#include "Student.hpp"
 #include "ConsoleInput.hpp"
 
 using std::cout;
@@ -71,41 +70,6 @@ vector<Student> getStudents(bool useRandom) {
     return students;
 }
 
-vector<Student> getStudentsFromFile(string filename) {
-    vector<Student> students;
-    
-    std::ifstream file(filename);
-    if (!file.fail()) {
-        string tempLine;
-        std::getline(file, tempLine); // ignore first line
-        
-        while (!file.eof()) {
-            Student student;
-            file >> student.firstName >> student.lastName;
-            
-            if (student.firstName == "") {
-                break;
-            }
-            
-            int result;
-            for (int i = 0; i < 5; i++) {
-                file >> result;
-                student.homeworkResults.push_back(result);
-            }
-            
-            file >> student.examResult;
-            
-            students.push_back(student);
-        }
-    } else {
-        cout << "Failo skaitymo klaida!" << endl;
-    }
-    
-    file.close();
-    
-    return students;
-}
-
 void printResults(StudentCollection collection, char mode) {
     int firstNameLength = collection.maxFirstNameLength();
     int lastNameLength = collection.maxLastNameLength();
@@ -137,7 +101,7 @@ int main(int argc, const char * argv[]) {
     bool useFile = ConsoleInput::getBoolWithQuestion("Ar norite skaityti pažymius iš failo?");
     
     if (useFile) {
-        collection.students = getStudentsFromFile("kursiokai.txt");
+        collection.loadFromFile("kursiokai.txt");
     } else {
         bool useRandom = ConsoleInput::getBoolWithQuestion("Ar norite naudoti atsitiktinius pažymius?");
         collection.students = getStudents(useRandom);

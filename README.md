@@ -53,4 +53,4 @@
 
 - Pirmoji programos versija
 
-[version-badge]: https://img.shields.io/badge/version-0.3-red.svg
+[version-badge]: https://img.shields.io/badge/version-0.3-green.svg

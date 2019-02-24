@@ -2,6 +2,8 @@
 
 ![version][version-badge]
 
+## [Užduoties sąlyga](https://github.com/objprog/paskaitos2019/wiki/2-oji-užduotis)
+
 ## Parsisiuntimas (Unix platformoje)
 
 - `git clone https://github.com/emilisb/OOP-2.git`
@@ -25,6 +27,18 @@
 - `./uzduotis`
 
 ## Versijų istorija (changelog)
+
+### [v0.3](https://github.com/emilisb/OOP-2/releases/tag/v0.3) - (2019-02-24)
+
+**Pridėta**
+
+- Dirbant su vektoriais naudojamas exception handling
+
+**Pakeista**
+
+- Ženkliai pertvarkytas kodas
+- Iškeltos pasikartojančios funkcijos/komponentai
+- Atnaujintas makefile
 
 ### [v0.2](https://github.com/emilisb/OOP-2/releases/tag/v0.2) - (2019-02-17)
 

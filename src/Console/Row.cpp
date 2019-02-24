@@ -7,6 +7,7 @@
 //
 
 #include <iostream>
+#include <stdexcept>
 #include <iomanip>
 
 #include "Row.hpp"
@@ -27,7 +28,12 @@ void Row::print(const std::vector<size_t> &widths) {
 }
 
 size_t Row::getSectionWidth(int sectionIndex) {
-    return sections.at(sectionIndex).width;
+    try {
+        return sections.at(sectionIndex).width;
+    } catch (const std::out_of_range& oor) {
+        std::cerr << "Out of Range error: " << oor.what() << '\n';
+        return 0;
+    }
 }
 
 

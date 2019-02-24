@@ -20,12 +20,15 @@ class Table {
 public:
     Table(int col) : columns(col) { };
     void print();
+    void addSeparator();
+    void setSeparatorRow(int row);
     void addRow(const std::initializer_list<std::string> &sections);
 private:
     std::vector<size_t> columnWidths;
     std::vector<Row> rows;
     
     int columns;
+    int separatorRow;
     
     void setColumnWidths();
 };

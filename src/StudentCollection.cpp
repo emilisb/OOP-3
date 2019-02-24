@@ -8,8 +8,6 @@
 
 #include <iostream>
 #include <fstream>
-#include <sstream>
-#include <iomanip>
 #include <random>
 #include <algorithm>
 
@@ -98,14 +96,13 @@ void StudentCollection::loadFromConsole(bool useRandom) {
 
 void StudentCollection::printResults() {
     Table table(3);
+    table.setSeparatorRow(1);
     table.addRow( { "Vardas", "Pavarde", getFinalResultLabel() } );
     
     for (auto &student : students) {
-        std::stringstream finalResult;
-        finalResult << std::fixed << std::setprecision(2) << student.finalResult;
-        table.addRow( { student.firstName, student.lastName, finalResult.str() } );
+        table.addRow( { student.firstName, student.lastName, student.getFinalResult() } );
     }
-    
+
     table.print();
 }
 
@@ -161,6 +158,6 @@ void StudentCollection::calculateFinal() {
 }
 
 string StudentCollection::getFinalResultLabel() {
-    string modeLabel = (finalResultMode == 'v' ? "Vid." : "Med.");
+    const string modeLabel = (finalResultMode == 'v' ? "Vid." : "Med.");
     return "Galutinis (" + modeLabel + ")";
 }

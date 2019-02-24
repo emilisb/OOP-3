@@ -16,8 +16,11 @@ struct Student {
     std::string firstName;
     std::string lastName;
     std::vector<unsigned int> homeworkResults;
-    unsigned int examResult = 0;
+    
     double finalResult = 0;
+    unsigned int examResult = 0;
+    
+    std::string getFinalResult();
     
     bool operator<(const Student& rhs) const
     {

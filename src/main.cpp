@@ -12,7 +12,7 @@
 int main(int argc, const char * argv[]) {
     StudentCollection collection;
     
-    bool useFile = Console::getBoolWithQuestion("Ar norite skaityti pažymius iš failo?");
+    const bool useFile = Console::getBoolWithQuestion("Ar norite skaityti pažymius iš failo?");
     
     if (useFile) {
         collection.loadFromFile("data/kursiokai.txt");

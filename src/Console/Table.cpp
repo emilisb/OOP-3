@@ -24,10 +24,27 @@ void Table::addRow(const std::initializer_list<std::string> &sections) {
 
 void Table::print() {
     setColumnWidths();
+    if (separatorRow) {
+        addSeparator();
+    }
     
     for (auto &row : rows) {
         row.print(columnWidths);
     }
+}
+
+void Table::setSeparatorRow(int row) {
+    separatorRow = row;
+}
+
+void Table::addSeparator() {
+    Row separator;
+    
+    for (const auto &width : columnWidths) {
+        separator.addSection(std::string(width, '-'), width);
+    }
+    
+    rows.insert(rows.begin() + separatorRow, separator);
 }
 
 void Table::setColumnWidths() {

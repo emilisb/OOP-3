@@ -15,7 +15,7 @@ int main(int argc, const char * argv[]) {
     bool useFile = Console::getBoolWithQuestion("Ar norite skaityti pažymius iš failo?");
     
     if (useFile) {
-        collection.loadFromFile("kursiokai.txt");
+        collection.loadFromFile("data/kursiokai.txt");
     } else {
         bool useRandom = Console::getBoolWithQuestion("Ar norite naudoti atsitiktinius pažymius?");
         collection.loadFromConsole(useRandom);

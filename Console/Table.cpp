@@ -32,7 +32,7 @@ void Table::print() {
 
 void Table::setColumnWidths() {
     for (int sectionIndex = 0; sectionIndex < columns; sectionIndex++) {
-        int width = 0;
+        size_t width = 0;
         
         for (auto &row : rows) {
             width = std::max(width, row.getSectionWidth(sectionIndex));

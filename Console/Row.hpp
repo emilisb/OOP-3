@@ -16,10 +16,10 @@
 
 class Row {
 public:
-    void addSection(std::string text, int width);
-    void print(const std::vector<int> &widths);
+    void addSection(std::string text, size_t width);
+    void print(const std::vector<size_t> &widths);
     
-    int getSectionWidth(int sectionIndex);
+    size_t getSectionWidth(int sectionIndex);
 private:
     std::vector<RowSection> sections;
 };

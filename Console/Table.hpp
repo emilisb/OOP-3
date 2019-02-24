@@ -22,7 +22,7 @@ public:
     void print();
     void addRow(const std::initializer_list<std::string> &sections);
 private:
-    std::vector<int> columnWidths;
+    std::vector<size_t> columnWidths;
     std::vector<Row> rows;
     
     int columns;

@@ -12,8 +12,8 @@
 #include <string>
 
 struct RowSection {
-    RowSection(std::string t, int w) : text(t), width(w) { };
-    int width;
+    RowSection(std::string t, size_t w) : text(t), width(w) { };
+    size_t width;
     std::string text;
 };
 

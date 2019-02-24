@@ -11,12 +11,12 @@
 
 #include "Row.hpp"
 
-void Row::addSection(std::string text, int width) {
+void Row::addSection(std::string text, size_t width) {
     RowSection section(text, width);
     sections.push_back(section);
 }
 
-void Row::print(const std::vector<int> &widths) {
+void Row::print(const std::vector<size_t> &widths) {
     int i = 0;
     std::cout << std::left;
     for (auto &section : sections) {
@@ -26,7 +26,7 @@ void Row::print(const std::vector<int> &widths) {
     std::cout << std::endl;
 }
 
-int Row::getSectionWidth(int sectionIndex) {
+size_t Row::getSectionWidth(int sectionIndex) {
     return sections.at(sectionIndex).width;
 }
 

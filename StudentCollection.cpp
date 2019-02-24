@@ -8,10 +8,18 @@
 
 #include <iostream>
 #include <fstream>
+#include <sstream>
+#include <iomanip>
 #include <algorithm>
-#include "StudentCollection.hpp"
 
-void StudentCollection::loadFromFile(string filename) {
+#include "StudentCollection.hpp"
+#include "Console/Table.hpp"
+#include "Console/Row.hpp"
+
+using std::cout;
+using std::endl;
+
+void StudentCollection::loadFromFile(string filename, int numHomeworkResults) {
     std::ifstream file(filename);
     if (!file.fail()) {
         string tempLine;
@@ -26,7 +34,7 @@ void StudentCollection::loadFromFile(string filename) {
             }
             
             int result;
-            for (int i = 0; i < HOMEWORK_RESULTS; i++) {
+            for (int i = 0; i < numHomeworkResults; i++) {
                 file >> result;
                 student.homeworkResults.push_back(result);
             }
@@ -40,6 +48,22 @@ void StudentCollection::loadFromFile(string filename) {
     }
     
     file.close();
+}
+
+void StudentCollection::printResults() {
+    string modeLabel = (finalResultMode == 'v' ? "Vid." : "Med.");
+    string finalResultLabel = "Galutinis (" + modeLabel + ")";
+    
+    Table table(3);
+    table.addRow( { "Vardas", "Pavarde", finalResultLabel } );
+    
+    for (auto &student : students) {
+        std::stringstream finalResult;
+        finalResult << std::fixed << std::setprecision(2) << student.finalResult;
+        table.addRow( { student.firstName, student.lastName, finalResult.str() } );
+    }
+    
+    table.print();
 }
 
 void StudentCollection::sortByName() {
@@ -82,22 +106,10 @@ void StudentCollection::calculateAverage() {
     }
 }
 
-int StudentCollection::maxFirstNameLength() {
-    int length = 6; // default value is length of string "Vardas"
-    
-    for (const auto &student : students) {
-        length = std::max(static_cast<int>(student.firstName.length()), length);
+void StudentCollection::calculateFinal() {
+    if (finalResultMode == 'v') {
+        calculateAverage();
+    } else if (finalResultMode == 'm') {
+        calculateMedian();
     }
-    
-    return length + 3;
-}
-
-int StudentCollection::maxLastNameLength() {
-    int length = 7; // default value is length of string "Pavarde"
-    
-    for (const auto &student : students) {
-        length = std::max(static_cast<int>(student.lastName.length()), length);
-    }
-    
-    return length + 3;
 }

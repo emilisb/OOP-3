@@ -1,5 +1,5 @@
 //
-//  ConsoleInput.cpp
+//  Console.cpp
 //  Uzduotis 2
 //
 //  Created by Emilis Baliukonis on 21/02/2019.
@@ -7,14 +7,14 @@
 //
 
 #include <iostream>
-#include "ConsoleInput.hpp"
+#include "Console.hpp"
 
 using std::cout;
 using std::cin;
 using std::endl;
 using std::string;
 
-bool ConsoleInput::getBoolWithQuestion(string question, char trueValue, char falseValue) {
+bool Console::getBoolWithQuestion(string question, char trueValue, char falseValue) {
     char input = '\0';
     
     while (input != trueValue && input != falseValue) {
@@ -33,7 +33,7 @@ bool ConsoleInput::getBoolWithQuestion(string question, char trueValue, char fal
     return input == trueValue;
 }
 
-char ConsoleInput::getCharWithQuestion(string question, string option1, string option2, char value1, char value2) {
+char Console::getCharWithQuestion(string question, string option1, string option2, char value1, char value2) {
     char input = '\0';
     
     while (input != value1 && input != value2) {
@@ -52,7 +52,7 @@ char ConsoleInput::getCharWithQuestion(string question, string option1, string o
     return input;
 }
 
-int ConsoleInput::getIntegerWithQuestion(string question) {
+int Console::getIntegerWithQuestion(string question) {
     int input = 0;
     cout << question << " ";
     cin >> input;
@@ -64,13 +64,13 @@ int ConsoleInput::getIntegerWithQuestion(string question) {
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         cout << "Bad input!" << endl;
         
-        return ConsoleInput::getIntegerWithQuestion(question);
+        return Console::getIntegerWithQuestion(question);
     }
     
     return input;
 }
 
-string ConsoleInput::getStringWithQuestion(string question) {
+string Console::getStringWithQuestion(string question) {
     string input;
     
     cout << question << " ";
@@ -83,7 +83,7 @@ string ConsoleInput::getStringWithQuestion(string question) {
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         cout << "Bad input!" << endl;
         
-        return ConsoleInput::getStringWithQuestion(question);
+        return Console::getStringWithQuestion(question);
     }
     
     return input;

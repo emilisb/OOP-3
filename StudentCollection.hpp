@@ -9,8 +9,6 @@
 #ifndef StudentCollection_hpp
 #define StudentCollection_hpp
 
-#define HOMEWORK_RESULTS 5
-
 #include <vector>
 #include <string>
 
@@ -23,15 +21,19 @@ class StudentCollection {
 public:
     vector<Student> students;
     
-    void loadFromFile(string filename);
+    void loadFromFile(string filename, int numHomeworkResults = 5);
+    void printResults();
     void sortByName();
     void calculateMedian();
     void calculateAverage();
+    void calculateFinal();
     
     bool compareByFirstName(const Student &a, const Student &b);
     
     int maxFirstNameLength();
     int maxLastNameLength();
+    
+    char finalResultMode;
 private:
     
 };

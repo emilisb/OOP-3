@@ -13,7 +13,7 @@
 #include <fstream>
 
 #include "StudentCollection.hpp"
-#include "ConsoleInput.hpp"
+#include "Console/Console.hpp"
 
 using std::cout;
 using std::endl;
@@ -30,9 +30,9 @@ vector<Student> getStudents(bool useRandom) {
     
     while (filling) {
         Student student;
-        student.firstName = ConsoleInput::getStringWithQuestion("Vardas (arba /q jeigu norite baigti vesti duomenis):");
+        student.firstName = Console::getStringWithQuestion("Vardas (arba /q jeigu norite baigti vesti duomenis):");
         if (student.firstName != EXIT_COMMAND) {
-            student.lastName = ConsoleInput::getStringWithQuestion("Pavardė:");
+            student.lastName = Console::getStringWithQuestion("Pavardė:");
             
             if (useRandom) {
                 std::random_device rd; // obtain a random number from hardware
@@ -50,7 +50,7 @@ vector<Student> getStudents(bool useRandom) {
                 bool fillingHomework = true;
                 
                 while (fillingHomework) {
-                    homeworkResult = ConsoleInput::getIntegerWithQuestion("Namų darbų rez. (arba 0 jei norite baigti vesti duomenis):");
+                    homeworkResult = Console::getIntegerWithQuestion("Namų darbų rez. (arba 0 jei norite baigti vesti duomenis):");
                     if (homeworkResult != 0) {
                         student.homeworkResults.push_back(homeworkResult);
                     } else {
@@ -58,7 +58,7 @@ vector<Student> getStudents(bool useRandom) {
                     }
                 }
                 
-                student.examResult = ConsoleInput::getIntegerWithQuestion("Egzamino rez:");
+                student.examResult = Console::getIntegerWithQuestion("Egzamino rez:");
             }
             
             students.push_back(student);
@@ -70,53 +70,24 @@ vector<Student> getStudents(bool useRandom) {
     return students;
 }
 
-void printResults(StudentCollection collection, char mode) {
-    int firstNameLength = collection.maxFirstNameLength();
-    int lastNameLength = collection.maxLastNameLength();
-    string modeLabel = (mode == 'v' ? "Vid." : "Med.");
-    string finalResultLabel = "Galutinis (" + modeLabel + ")";
-    
-    cout << std::left
-    << std::setw(firstNameLength) << "Vardas"
-    << std::setw(lastNameLength) << "Pavardė"
-    << std::setw(finalResultLabel.length()) << finalResultLabel
-    << endl;
-    
-    string separator = string(firstNameLength + lastNameLength + finalResultLabel.length(), '-');
-    
-    cout << separator << endl;
-    
-    for (auto &student : collection.students) {
-        cout << std::left
-        << std::setw(firstNameLength) << student.firstName
-        << std::setw(lastNameLength) << student.lastName
-        << std::setw(finalResultLabel.length()) << std::fixed << std::setprecision(2) << student.finalResult
-        << endl;
-    }
-}
-
 int main(int argc, const char * argv[]) {
     StudentCollection collection;
     
-    bool useFile = ConsoleInput::getBoolWithQuestion("Ar norite skaityti pažymius iš failo?");
+    bool useFile = Console::getBoolWithQuestion("Ar norite skaityti pažymius iš failo?");
     
     if (useFile) {
         collection.loadFromFile("kursiokai.txt");
     } else {
-        bool useRandom = ConsoleInput::getBoolWithQuestion("Ar norite naudoti atsitiktinius pažymius?");
+        bool useRandom = Console::getBoolWithQuestion("Ar norite naudoti atsitiktinius pažymius?");
         collection.students = getStudents(useRandom);
     }
     
-    char mode = ConsoleInput::getCharWithQuestion("Ar norite naudoti vidurkį ar medianą?", "vidurkį", "medianą", 'v', 'm');
+    collection.finalResultMode = Console::getCharWithQuestion("Ar norite naudoti vidurkį ar medianą?", "vidurkį", "medianą", 'v', 'm');
     
-    if (mode == 'v') {
-        collection.calculateAverage();
-    } else if (mode == 'm') {
-        collection.calculateMedian();
-    }
+    collection.calculateFinal();
     
     collection.sortByName();
-    printResults(collection, mode);
+    collection.printResults();
     
     return 0;
 }

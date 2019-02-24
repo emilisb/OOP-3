@@ -7,14 +7,22 @@
 - `git clone https://github.com/emilisb/OOP-2.git`
 - `cd OOP-2`
 
-## Paleidimas
+## Kompiliavimas
 
 - `make`
-- `./main`
+
+**arba build + paleidimas**
+
+- `make run`
+
+## Paleidimas
+
+- `make run`
 
 **arba**
 
-- `make test`
+- `cd bin`
+- `./uzduotis`
 
 ## Versijų istorija (changelog)
 

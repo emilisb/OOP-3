@@ -6,7 +6,4 @@
 //  Copyright © 2019 Emilis Baliukonis. All rights reserved.
 //
 
-#include <iostream>
-#include <iomanip>
-
 #include "RowSection.hpp"

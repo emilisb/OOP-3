@@ -9,6 +9,8 @@
 #ifndef StudentCollection_hpp
 #define StudentCollection_hpp
 
+#define EXIT_COMMAND "/q"
+
 #include <vector>
 #include <string>
 
@@ -19,23 +21,20 @@ using std::string;
 
 class StudentCollection {
 public:
-    vector<Student> students;
-    
     void loadFromFile(string filename, int numHomeworkResults = 5);
+    void loadFromConsole(bool useRandom = false);
     void printResults();
     void sortByName();
-    void calculateMedian();
-    void calculateAverage();
     void calculateFinal();
-    
-    bool compareByFirstName(const Student &a, const Student &b);
-    
-    int maxFirstNameLength();
-    int maxLastNameLength();
     
     char finalResultMode;
 private:
+    vector<Student> students;
     
+    void calculateMedian();
+    void calculateAverage();
+    
+    string getFinalResultLabel();
 };
 
 #endif /* StudentCollection_hpp */

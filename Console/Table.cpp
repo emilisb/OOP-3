@@ -14,7 +14,7 @@ void Table::addRow(const std::initializer_list<std::string> &sections) {
     Row row;
     int i = 0;
     
-    for (auto &text : sections) {
+    for (const auto &text : sections) {
         row.addSection(text, text.length());
         i++;
     }

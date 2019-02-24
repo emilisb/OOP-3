@@ -19,7 +19,7 @@ void Row::addSection(std::string text, size_t width) {
 void Row::print(const std::vector<size_t> &widths) {
     int i = 0;
     std::cout << std::left;
-    for (auto &section : sections) {
+    for (const auto &section : sections) {
         std::cout << std::setw(widths.at(i)) << section.text;
         i++;
     }

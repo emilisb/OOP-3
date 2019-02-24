@@ -150,10 +150,13 @@ void StudentCollection::calculateAverage() {
 }
 
 void StudentCollection::calculateFinal() {
-    if (finalResultMode == 'v') {
-        calculateAverage();
-    } else if (finalResultMode == 'm') {
-        calculateMedian();
+    switch (finalResultMode) {
+        case 'v':
+            calculateAverage();
+            break;
+        case 'm':
+            calculateMedian();
+            break;
     }
 }
 

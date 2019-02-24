@@ -28,6 +28,16 @@
 
 ## Versijų istorija (changelog)
 
+### [v0.3.1](https://github.com/emilisb/OOP-2/releases/tag/v0.3.1) - (2019-02-24)
+
+**Pridėta**
+
+- Pridėta trūkstama linija po lentelės viršutinės sekcijos
+
+**Pakeista**
+
+- Iškelta galutinio įvertinimo teksto generavimo funkcija
+
 ### [v0.3](https://github.com/emilisb/OOP-2/releases/tag/v0.3) - (2019-02-24)
 
 **Pridėta**
@@ -53,4 +63,4 @@
 
 - Pirmoji programos versija
 
-[version-badge]: https://img.shields.io/badge/version-0.3-green.svg
+[version-badge]: https://img.shields.io/badge/version-0.3.1-green.svg

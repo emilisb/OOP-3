@@ -12,7 +12,8 @@
 #include <vector>
 #include <string>
 
-struct Student {
+class Student {
+public:
     std::string firstName;
     std::string lastName;
     std::vector<unsigned int> homeworkResults;
@@ -21,6 +22,9 @@ struct Student {
     unsigned int examResult = 0;
     
     std::string getFinalResult();
+    
+    void calculateAverage();
+    void calculateMedian();
     
     bool operator<(const Student& rhs) const
     {

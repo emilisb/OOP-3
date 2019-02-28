@@ -50,7 +50,7 @@ void Table::addSeparator() {
 void Table::setColumnWidths() {
     for (int sectionIndex = 0; sectionIndex < columns; sectionIndex++) {
         size_t width = 0;
-        
+
         for (auto &row : rows) {
             width = std::max(width, row.getSectionWidth(sectionIndex));
         }

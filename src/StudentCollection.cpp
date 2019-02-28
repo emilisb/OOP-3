@@ -112,37 +112,13 @@ void StudentCollection::sortByName() {
 
 void StudentCollection::calculateMedian() {
     for (auto &student : students) {
-        double median = 0;
-        
-        if (!student.homeworkResults.empty()) {
-            auto resultsCount = student.homeworkResults.size();
-            std::sort(student.homeworkResults.begin(), student.homeworkResults.end());
-            
-            if (resultsCount % 2 != 0) {
-                median = student.homeworkResults.at(resultsCount/2);
-            } else {
-                median = (double)(student.homeworkResults.at((resultsCount-1)/2) + student.homeworkResults.at(resultsCount/2))/2.0;
-            }
-        }
-        
-        student.finalResult = 0.4 * median + 0.6 * student.examResult;
+        student.calculateMedian();
     }
 }
 
 void StudentCollection::calculateAverage() {
     for (auto &student : students) {
-        unsigned int sum = 0;
-        double average = 0;
-        
-        if (!student.homeworkResults.empty()) {
-            for (const auto &result : student.homeworkResults) {
-                sum += result;
-            }
-            
-            average = (double)sum / student.homeworkResults.size();
-        }
-        
-        student.finalResult = 0.4 * average + 0.6 * student.examResult;
+        student.calculateAverage();
     }
 }
 

@@ -8,7 +8,6 @@
 
 #include <iostream>
 #include <fstream>
-#include <random>
 #include <algorithm>
 
 #include "StudentCollection.hpp"
@@ -50,46 +49,65 @@ void StudentCollection::loadFromFile(string filename, int numHomeworkResults) {
     file.close();
 }
 
-void StudentCollection::loadFromConsole(bool useRandom) {
-    bool filling = true;
+Student StudentCollection::getRandomStudent() {
+    Student student;
+    student.firstName = "Vardas";
+    student.lastName = "Pavarde";
+    
+    const int numOfHomework = randomGenerator.getNumber(1, 10);
+    
+    for (int i = 0; i < numOfHomework; i++) {
+        student.homeworkResults.push_back(randomGenerator.getNumber(1, 10));
+    }
+    
+    student.examResult = randomGenerator.getNumber(1, 10);
+    
+    return student;
+}
+
+Student StudentCollection::getStudentFromInput() {
+    Student student;
     unsigned int homeworkResult;
     
-    while (filling) {
-        Student student;
-        student.firstName = Console::getStringWithQuestion("Vardas (arba /q jeigu norite baigti vesti duomenis):");
-        if (student.firstName != EXIT_COMMAND) {
-            student.lastName = Console::getStringWithQuestion("Pavardė:");
-            
-            if (useRandom) {
-                std::random_device rd; // obtain a random number from hardware
-                std::mt19937 eng(rd()); // seed the generator
-                std::uniform_int_distribution<> distr(1, 10); // define the range
-                
-                int numOfHomework = distr(eng);
-                
-                for (int i = 0; i < numOfHomework; i++) {
-                    student.homeworkResults.push_back(distr(eng));
-                }
-                
-                student.examResult = distr(eng);
+    student.firstName = Console::getStringWithQuestion("Vardas (arba /q jeigu norite baigti vesti duomenis):");
+    if (student.firstName != EXIT_COMMAND) {
+        student.lastName = Console::getStringWithQuestion("Pavardė:");
+        bool fillingHomework = true;
+        
+        while (fillingHomework) {
+            homeworkResult = Console::getIntegerWithQuestion("Namų darbų rez. (arba 0 jei norite baigti vesti duomenis):");
+            if (homeworkResult != 0) {
+                student.homeworkResults.push_back(homeworkResult);
             } else {
-                bool fillingHomework = true;
-                
-                while (fillingHomework) {
-                    homeworkResult = Console::getIntegerWithQuestion("Namų darbų rez. (arba 0 jei norite baigti vesti duomenis):");
-                    if (homeworkResult != 0) {
-                        student.homeworkResults.push_back(homeworkResult);
-                    } else {
-                        fillingHomework = false;
-                    }
-                }
-                
-                student.examResult = Console::getIntegerWithQuestion("Egzamino rez:");
+                fillingHomework = false;
             }
-            
+        }
+        
+        student.examResult = Console::getIntegerWithQuestion("Egzamino rez:");
+    }
+    
+    return student;
+}
+
+void StudentCollection::loadFromConsole(bool useRandom) {
+    if (useRandom) {
+        const int numStudents = randomGenerator.getNumber(3, 10);
+        
+        for (int i = 0; i < numStudents; i++) {
+            Student student = getRandomStudent();
             students.push_back(student);
-        } else {
-            filling = false;
+        }
+    } else {
+        bool filling = true;
+        
+        while (filling) {
+            Student student = getStudentFromInput();
+            
+            if (student.firstName == EXIT_COMMAND) {
+                filling = false;
+            } else {
+                students.push_back(student);
+            }
         }
     }
 }
@@ -102,7 +120,7 @@ void StudentCollection::printResults() {
     for (auto &student : students) {
         table.addRow( { student.firstName, student.lastName, student.getFinalResult() } );
     }
-
+    
     table.print();
 }
 

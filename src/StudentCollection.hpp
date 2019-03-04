@@ -9,6 +9,8 @@
 #ifndef StudentCollection_hpp
 #define StudentCollection_hpp
 
+#include "RandomGenerator.hpp"
+
 #define EXIT_COMMAND "/q"
 
 #include <vector>
@@ -35,6 +37,11 @@ private:
     void calculateAverage();
     
     string getFinalResultLabel();
+    
+    Student getRandomStudent();
+    Student getStudentFromInput();
+    
+    RandomGenerator randomGenerator;
 };
 
 #endif /* StudentCollection_hpp */

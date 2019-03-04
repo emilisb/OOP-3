@@ -17,7 +17,7 @@ int main(int argc, const char * argv[]) {
     if (useFile) {
         collection.loadFromFile("data/kursiokai.txt");
     } else {
-        const bool useRandom = Console::getBoolWithQuestion("Ar norite naudoti atsitiktinius pažymius?");
+        const bool useRandom = Console::getBoolWithQuestion("Ar norite naudoti atsitiktinius duomenis?");
         collection.loadFromConsole(useRandom);
     }
     

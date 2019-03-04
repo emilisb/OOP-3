@@ -28,6 +28,17 @@
 
 ## Versijų istorija (changelog)
 
+### [v0.4](https://github.com/emilisb/OOP-2/releases/tag/v0.4) - (2019-03-04)
+
+**Pridėta**
+
+- Pridėtas duomenų failų generavimas
+- Pridėta galimybė analizuoti programos veikimo laiką
+
+**Programos spartos analizė**
+
+![](https://i.imgur.com/RoGyppG.png)
+
 ### [v0.3.1](https://github.com/emilisb/OOP-2/releases/tag/v0.3.1) - (2019-02-24)
 
 **Pridėta**
@@ -63,4 +74,4 @@
 
 - Pirmoji programos versija
 
-[version-badge]: https://img.shields.io/badge/version-0.3.1-green.svg
+[version-badge]: https://img.shields.io/badge/version-0.4-green.svg

@@ -16,7 +16,6 @@ public:
     RandomGenerator();
     int getNumber(int from, int to);
 private:
-    std::random_device rd; // obtain a random number from hardware
     std::mt19937 eng; // seed the generator
 };
 

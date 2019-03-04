@@ -9,6 +9,7 @@
 #include "RandomGenerator.hpp"
 
 RandomGenerator::RandomGenerator() {
+    std::random_device rd; // obtain a random number from hardware
     eng.seed(rd()); // seed the generator
 }
 

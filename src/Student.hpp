@@ -21,10 +21,14 @@ public:
     double finalResult = 0;
     unsigned int examResult = 0;
     
+    bool isGood;
+    
     std::string getFinalResult();
     
     void calculateAverage();
     void calculateMedian();
+    
+    void setGoodStatus();
     
     bool operator<(const Student& rhs) const
     {

@@ -41,3 +41,7 @@ void Student::calculateMedian() {
     
     finalResult = 0.4 * median + 0.6 * examResult;
 }
+
+void Student::setGoodStatus() {
+    isGood = finalResult >= 5.0;
+}

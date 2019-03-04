@@ -7,7 +7,6 @@
 //
 
 #include <iostream>
-#include <fstream>
 #include <algorithm>
 
 #include "StudentCollection.hpp"
@@ -17,6 +16,47 @@
 
 using std::cout;
 using std::endl;
+
+void StudentCollection::printFileHeader(std::ofstream &file) {
+    file << "Vardas Pavarde ND1 ND2 ND3 ND4 ND5 Egzaminas" << '\n';
+}
+
+void StudentCollection::printStudentToFile(std::ofstream &file, const Student &student) {
+    file << student.firstName << " " << student.lastName << " ";
+    for (int i = 0; i < 5; i++) {
+        file << student.homeworkResults.at(i) << " ";
+    }
+    file << student.examResult << '\n';
+}
+
+void StudentCollection::writeStudentsByTypeToFile(string badStudentsFilename, string goodStudentsFilename) {
+    std::ofstream badStudentsFile(badStudentsFilename);
+    std::ofstream goodStudentsFile(goodStudentsFilename);
+    
+    printFileHeader(badStudentsFile);
+    printFileHeader(goodStudentsFile);
+    
+    for (const auto &student : students) {
+        if (student.isGood) {
+            printStudentToFile(goodStudentsFile, student);
+        } else {
+            printStudentToFile(badStudentsFile, student);
+        }
+    }
+}
+
+void StudentCollection::generateRandomFile(string filename, int numOfStudents) {
+    Student student;
+    std::ofstream file(filename);
+    printFileHeader(file);
+    
+    for (int i = 0; i < numOfStudents; i++) {
+        student = getRandomStudent(5, i);
+        printStudentToFile(file, student);
+    }
+    
+    file.close();
+}
 
 void StudentCollection::loadFromFile(string filename, int numHomeworkResults) {
     std::ifstream file(filename);
@@ -49,12 +89,14 @@ void StudentCollection::loadFromFile(string filename, int numHomeworkResults) {
     file.close();
 }
 
-Student StudentCollection::getRandomStudent() {
+Student StudentCollection::getRandomStudent(int numOfHomework, int id) {
     Student student;
-    student.firstName = "Vardas";
-    student.lastName = "Pavarde";
+    student.firstName = "Vardas" + std::to_string(id);
+    student.lastName = "Pavarde" + std::to_string(id);
     
-    const int numOfHomework = randomGenerator.getNumber(1, 10);
+    if (!numOfHomework) {
+        numOfHomework = randomGenerator.getNumber(1, 10);
+    }
     
     for (int i = 0; i < numOfHomework; i++) {
         student.homeworkResults.push_back(randomGenerator.getNumber(1, 10));
@@ -94,7 +136,7 @@ void StudentCollection::loadFromConsole(bool useRandom) {
         const int numStudents = randomGenerator.getNumber(3, 10);
         
         for (int i = 0; i < numStudents; i++) {
-            Student student = getRandomStudent();
+            Student student = getRandomStudent(5, i);
             students.push_back(student);
         }
     } else {
@@ -154,4 +196,10 @@ void StudentCollection::calculateFinal() {
 string StudentCollection::getFinalResultLabel() {
     const string modeLabel = (finalResultMode == 'v' ? "Vid." : "Med.");
     return "Galutinis (" + modeLabel + ")";
+}
+
+void StudentCollection::setTypeByFinalResult() {
+    for (auto &student : students) {
+        student.setGoodStatus();
+    }
 }

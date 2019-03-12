@@ -28,6 +28,21 @@
 
 ## Versijų istorija (changelog)
 
+### [v0.5](https://github.com/emilisb/OOP-2/releases/tag/v0.5) - (2019-03-12)
+
+**Pridėta**
+
+- Pridėti `std::list` ir `std::deque` konteineriai
+
+**Pakeista**
+
+- Pereita prie C++17 standarto
+
+**Programos spartos analizė**
+
+![](https://i.imgur.com/ly3j3bP.png)
+
+
 ### [v0.4](https://github.com/emilisb/OOP-2/releases/tag/v0.4) - (2019-03-04)
 
 **Pridėta**
@@ -74,4 +89,4 @@
 
 - Pirmoji programos versija
 
-[version-badge]: https://img.shields.io/badge/version-0.4-green.svg
+[version-badge]: https://img.shields.io/badge/version-0.5-green.svg

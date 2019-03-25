@@ -9,11 +9,22 @@
 #define UNITS "ms"
 #define MAX_STUDENTS 100000
 
+//#define _CONTAINER_LIST_
+//#define _CONTAINER_DEQUE_
+#define _CONTAINER_VECTOR_
+
+#ifdef _CONTAINER_DEQUE_
+    #define CONTAINER "Deque"
+#elif defined(_CONTAINER_LIST_)
+    #define CONTAINER "List"
+#else
+    #define CONTAINER "Vector"
+#endif
+
 #include <string>
 
 #include "StudentCollection.hpp"
-#include "ListCollection.hpp"
-#include "DequeCollection.hpp"
+
 #include "Console/Console.hpp"
 #include "Console/Table.hpp"
 #include "Console/Row.hpp"
@@ -25,9 +36,9 @@ int main(int argc, const char * argv[]) {
     const bool useProfiler = Console::getBoolWithQuestion("Ar norite atlikti spartos testą?");
     
     if (useProfiler) {
-        Table table(8);
+        Table table(9);
         table.setSeparatorRow(1);
-        table.addRow( { "Kont.", "N", "Skait.", "Skaiciav.", "Rikiav.", "Rūsiav.", "Rasymas", "Viso" } );
+        table.addRow( { "Kont.", "Str.", "N", "Skait.", "Skaiciav.", "Rikiav.", "Rūsiav.", "Rasymas", "Viso" } );
         
         for (int numOfStudents = 10; numOfStudents <= MAX_STUDENTS; numOfStudents*= 10) {
             StudentCollection collection;
@@ -53,26 +64,26 @@ int main(int argc, const char * argv[]) {
             string time4 = std::to_string(timer.duration()) + UNITS;
             
             timer.start();
-            collection.setTypeByFinalResult();
+            collection.pushByType();
             string time5 = std::to_string(timer.duration()) + UNITS;
             
             timer.start();
-            collection.writeStudentsByTypeToFile("data/bad_students.txt", "data/good_students.txt");
+            collection.writeGroupedStudentsToFile("data/bad_students.txt", "data/good_students.txt");
             string time6 = std::to_string(timer.duration()) + UNITS;
             
             string time7 = std::to_string(totalTimer.duration()) + UNITS;
             
-            table.addRow( { "Vector", std::to_string(numOfStudents), time2, time3, time4, time5, time6, time7 } );
+            table.addRow( { CONTAINER, "Push", std::to_string(numOfStudents), time2, time3, time4, time5, time6, time7 } );
         }
         
         for (int numOfStudents = 10; numOfStudents <= MAX_STUDENTS; numOfStudents*= 10) {
-            Timer totalTimer;
-            totalTimer.start();
-            
-            ListCollection collection;
+            StudentCollection collection;
             collection.finalResultMode = 'v';
             
             string filename = "data/" + std::to_string(numOfStudents) + ".txt";
+            
+            Timer totalTimer;
+            totalTimer.start();
             
             Timer timer;
             timer.start();
@@ -88,51 +99,16 @@ int main(int argc, const char * argv[]) {
             string time4 = std::to_string(timer.duration()) + UNITS;
             
             timer.start();
-            collection.setTypeByFinalResult();
+            collection.moveBadStudents();
             string time5 = std::to_string(timer.duration()) + UNITS;
             
             timer.start();
-            collection.writeStudentsByTypeToFile("data/bad_students.txt", "data/good_students.txt");
+            collection.writeMovedBadStudentsToFile("data/bad_students.txt", "data/good_students.txt");
             string time6 = std::to_string(timer.duration()) + UNITS;
             
             string time7 = std::to_string(totalTimer.duration()) + UNITS;
             
-            table.addRow( { "List", std::to_string(numOfStudents), time2, time3, time4, time5, time6, time7 } );
-        }
-        
-        for (int numOfStudents = 10; numOfStudents <= MAX_STUDENTS; numOfStudents*= 10) {
-            Timer totalTimer;
-            totalTimer.start();
-            
-            DequeCollection collection;
-            collection.finalResultMode = 'v';
-            
-            string filename = "data/" + std::to_string(numOfStudents) + ".txt";
-            
-            Timer timer;
-            timer.start();
-            collection.loadFromFile(filename);
-            string time2 = std::to_string(timer.duration()) + UNITS;
-            
-            timer.start();
-            collection.calculateFinal();
-            string time3 = std::to_string(timer.duration()) + UNITS;
-            
-            timer.start();
-            collection.sortByName();
-            string time4 = std::to_string(timer.duration()) + UNITS;
-            
-            timer.start();
-            collection.setTypeByFinalResult();
-            string time5 = std::to_string(timer.duration()) + UNITS;
-            
-            timer.start();
-            collection.writeStudentsByTypeToFile("data/bad_students.txt", "data/good_students.txt");
-            string time6 = std::to_string(timer.duration()) + UNITS;
-            
-            string time7 = std::to_string(totalTimer.duration()) + UNITS;
-            
-            table.addRow( { "Deque", std::to_string(numOfStudents), time2, time3, time4, time5, time6, time7 } );
+            table.addRow( { CONTAINER, "Remove", std::to_string(numOfStudents), time2, time3, time4, time5, time6, time7 } );
         }
         
         table.print();

@@ -45,6 +45,38 @@ void StudentCollection::writeStudentsByTypeToFile(string badStudentsFilename, st
     }
 }
 
+void StudentCollection::writeGroupedStudentsToFile(string badStudentsFilename, string goodStudentsFilename) {
+    std::ofstream badStudentsFile(badStudentsFilename);
+    std::ofstream goodStudentsFile(goodStudentsFilename);
+    
+    printFileHeader(badStudentsFile);
+    printFileHeader(goodStudentsFile);
+    
+    for (const auto &student : badStudents) {
+        printStudentToFile(badStudentsFile, student);
+    }
+    
+    for (const auto &student : goodStudents) {
+        printStudentToFile(goodStudentsFile, student);
+    }
+}
+
+void StudentCollection::writeMovedBadStudentsToFile(string badStudentsFilename, string goodStudentsFilename) {
+    std::ofstream badStudentsFile(badStudentsFilename);
+    std::ofstream goodStudentsFile(goodStudentsFilename);
+    
+    printFileHeader(badStudentsFile);
+    printFileHeader(goodStudentsFile);
+    
+    for (const auto &student : badStudents) {
+        printStudentToFile(badStudentsFile, student);
+    }
+    
+    for (const auto &student : students) {
+        printStudentToFile(goodStudentsFile, student);
+    }
+}
+
 void StudentCollection::generateRandomFile(string filename, int numOfStudents) {
     Student student;
     std::ofstream file(filename);
@@ -167,7 +199,11 @@ void StudentCollection::printResults() {
 }
 
 void StudentCollection::sortByName() {
+#ifdef _CONTAINER_DEQUE_
+    students.sort();
+#else
     std::sort(students.begin(), students.end());
+#endif
 }
 
 void StudentCollection::calculateMedian() {
@@ -202,4 +238,23 @@ void StudentCollection::setTypeByFinalResult() {
     for (auto &student : students) {
         student.setGoodStatus();
     }
+}
+
+void StudentCollection::pushByType() {
+    for (const auto &student : students) {
+        if (student.finalResult >= 5) {
+            goodStudents.push_back(student);
+        } else {
+            badStudents.push_back(student);
+        }
+    }
+}
+
+void StudentCollection::moveBadStudents() {
+    auto it = std::stable_partition(students.begin(), students.end(), [](Student student) {
+        return student.finalResult < 5;
+    });
+    
+    std::move(students.begin(), it, std::back_inserter(badStudents));
+    students.erase(students.begin(), it);
 }

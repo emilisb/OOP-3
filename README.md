@@ -28,6 +28,20 @@
 
 ## Versijų istorija (changelog)
 
+### [v1.0](https://github.com/emilisb/OOP-2/releases/tag/v1.0) - (2019-03-25 😔😔😔)
+
+**Pridėta**
+
+- Pridėtos naujos "kietekų" ir "vargšiukų" dalybos strategijos
+
+**Pakeista**
+
+- Skirtingi konteineriai naudoja tą patį failą
+
+**Programos spartos analizė**
+
+![](https://i.imgur.com/ly3j3bP.png)
+
 ### [v0.5](https://github.com/emilisb/OOP-2/releases/tag/v0.5) - (2019-03-12)
 
 **Pridėta**
@@ -89,4 +103,4 @@
 
 - Pirmoji programos versija
 
-[version-badge]: https://img.shields.io/badge/version-0.5-green.svg
+[version-badge]: https://img.shields.io/badge/version-1.0-green.svg

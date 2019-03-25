@@ -9,9 +9,9 @@
 #define UNITS "ms"
 #define MAX_STUDENTS 100000
 
-//#define _CONTAINER_LIST_
+#define _CONTAINER_LIST_
 //#define _CONTAINER_DEQUE_
-#define _CONTAINER_VECTOR_
+//#define _CONTAINER_VECTOR_
 
 #ifdef _CONTAINER_DEQUE_
     #define CONTAINER "Deque"
@@ -109,6 +109,41 @@ int main(int argc, const char * argv[]) {
             string time7 = std::to_string(totalTimer.duration()) + UNITS;
             
             table.addRow( { CONTAINER, "Remove", std::to_string(numOfStudents), time2, time3, time4, time5, time6, time7 } );
+        }
+        
+        for (int numOfStudents = 10; numOfStudents <= MAX_STUDENTS; numOfStudents*= 10) {
+            StudentCollection collection;
+            collection.finalResultMode = 'v';
+            
+            string filename = "data/" + std::to_string(numOfStudents) + ".txt";
+            
+            Timer totalTimer;
+            totalTimer.start();
+            
+            Timer timer;
+            timer.start();
+            collection.loadFromFile(filename);
+            string time2 = std::to_string(timer.duration()) + UNITS;
+            
+            timer.start();
+            collection.calculateFinal();
+            string time3 = std::to_string(timer.duration()) + UNITS;
+            
+            timer.start();
+            collection.sortByName();
+            string time4 = std::to_string(timer.duration()) + UNITS;
+            
+            timer.start();
+            collection.setTypeByFinalResult();
+            string time5 = std::to_string(timer.duration()) + UNITS;
+            
+            timer.start();
+            collection.writeStudentsByTypeToFile("data/bad_students.txt", "data/good_students.txt");
+            string time6 = std::to_string(timer.duration()) + UNITS;
+            
+            string time7 = std::to_string(totalTimer.duration()) + UNITS;
+            
+            table.addRow( { CONTAINER, "Flag", std::to_string(numOfStudents), time2, time3, time4, time5, time6, time7 } );
         }
         
         table.print();

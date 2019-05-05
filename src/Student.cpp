@@ -12,7 +12,7 @@
 
 #include "Student.hpp"
 
-std::string Student::getFinalResult() {
+std::string Student::getFinalResultString() {
     std::stringstream result;
     result << std::fixed << std::setprecision(2) << finalResult;
     

@@ -14,16 +14,16 @@
 
 class Student {
 public:
-    std::string firstName;
-    std::string lastName;
-    std::vector<unsigned int> homeworkResults;
+    Student(std::string first, std::string last, std::vector<unsigned int> results, unsigned int exam) : firstName(first), lastName(last), homeworkResults(results), examResult(exam) {}
     
-    double finalResult = 0;
-    unsigned int examResult = 0;
+    inline std::string getFirstName() const { return firstName; }
+    inline std::string getLastName() const { return lastName; }
+    inline std::vector<unsigned int> getHomeworkResults() const { return homeworkResults; }
+    inline double getFinalResult() const { return finalResult; }
+    inline unsigned int getExamResult() const { return examResult; }
+    inline bool getIsGood() const { return isGood; }
     
-    bool isGood;
-    
-    std::string getFinalResult();
+    std::string getFinalResultString();
     
     void calculateAverage();
     void calculateMedian();
@@ -34,6 +34,15 @@ public:
     {
         return firstName < rhs.firstName;
     }
+private:
+    std::string firstName;
+    std::string lastName;
+    std::vector<unsigned int> homeworkResults;
+    
+    double finalResult = 0;
+    unsigned int examResult = 0;
+    
+    bool isGood;
 };
 
 #endif /* Student_hpp */

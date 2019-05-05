@@ -22,11 +22,11 @@ void StudentCollection::printFileHeader(std::ofstream &file) {
 }
 
 void StudentCollection::printStudentToFile(std::ofstream &file, const Student &student) {
-    file << student.firstName << " " << student.lastName << " ";
+    file << student.getFirstName() << " " << student.getLastName() << " ";
     for (int i = 0; i < 5; i++) {
-        file << student.homeworkResults.at(i) << " ";
+        file << student.getHomeworkResults().at(i) << " ";
     }
-    file << student.examResult << '\n';
+    file << student.getExamResult() << '\n';
 }
 
 void StudentCollection::writeStudentsByTypeToFile(string badStudentsFilename, string goodStudentsFilename) {
@@ -37,7 +37,7 @@ void StudentCollection::writeStudentsByTypeToFile(string badStudentsFilename, st
     printFileHeader(goodStudentsFile);
     
     for (const auto &student : students) {
-        if (student.isGood) {
+        if (student.getIsGood()) {
             printStudentToFile(goodStudentsFile, student);
         } else {
             printStudentToFile(badStudentsFile, student);
@@ -78,12 +78,11 @@ void StudentCollection::writeMovedBadStudentsToFile(string badStudentsFilename, 
 }
 
 void StudentCollection::generateRandomFile(string filename, int numOfStudents) {
-    Student student;
     std::ofstream file(filename);
     printFileHeader(file);
     
     for (int i = 0; i < numOfStudents; i++) {
-        student = getRandomStudent(5, i);
+        Student student = getRandomStudent(5, i);
         printStudentToFile(file, student);
     }
     
@@ -97,21 +96,25 @@ void StudentCollection::loadFromFile(string filename, int numHomeworkResults) {
         std::getline(file, tempLine); // ignore first line
         
         while (!file.eof()) {
-            Student student;
-            file >> student.firstName >> student.lastName;
+            std::string firstName;
+            std::string lastName;
+            std::vector<unsigned int> homeworkResults;
+            unsigned int examResult;
+            file >> firstName >> lastName;
             
-            if (student.firstName == "") {
+            if (firstName == "") {
                 break;
             }
             
             int result;
             for (int i = 0; i < numHomeworkResults; i++) {
                 file >> result;
-                student.homeworkResults.push_back(result);
+                homeworkResults.push_back(result);
             }
             
-            file >> student.examResult;
+            file >> examResult;
             
+            Student student(firstName, lastName, homeworkResults, examResult);
             students.push_back(student);
         }
     } else {
@@ -122,45 +125,47 @@ void StudentCollection::loadFromFile(string filename, int numHomeworkResults) {
 }
 
 Student StudentCollection::getRandomStudent(int numOfHomework, int id) {
-    Student student;
-    student.firstName = "Vardas" + std::to_string(id);
-    student.lastName = "Pavarde" + std::to_string(id);
+    std::string firstName = "Vardas" + std::to_string(id);
+    std::string lastName = "Pavarde" + std::to_string(id);
+    std::vector<unsigned int> homeworkResults;
     
     if (!numOfHomework) {
         numOfHomework = randomGenerator.getNumber(1, 10);
     }
     
     for (int i = 0; i < numOfHomework; i++) {
-        student.homeworkResults.push_back(randomGenerator.getNumber(1, 10));
+        homeworkResults.push_back(randomGenerator.getNumber(1, 10));
     }
     
-    student.examResult = randomGenerator.getNumber(1, 10);
+    unsigned int examResult = randomGenerator.getNumber(1, 10);
     
-    return student;
+    return Student(firstName, lastName, homeworkResults, examResult);
 }
 
 Student StudentCollection::getStudentFromInput() {
-    Student student;
     unsigned int homeworkResult;
     
-    student.firstName = Console::getStringWithQuestion("Vardas (arba /q jeigu norite baigti vesti duomenis):");
-    if (student.firstName != EXIT_COMMAND) {
-        student.lastName = Console::getStringWithQuestion("Pavardė:");
+    std::string firstName = Console::getStringWithQuestion("Vardas (arba /q jeigu norite baigti vesti duomenis):");
+    std::string lastName;
+    std::vector<unsigned int> homeworkResults;
+    unsigned int examResult = 0;
+    if (firstName != EXIT_COMMAND) {
+        lastName = Console::getStringWithQuestion("Pavardė:");
         bool fillingHomework = true;
         
         while (fillingHomework) {
             homeworkResult = Console::getIntegerWithQuestion("Namų darbų rez. (arba 0 jei norite baigti vesti duomenis):");
             if (homeworkResult != 0) {
-                student.homeworkResults.push_back(homeworkResult);
+                homeworkResults.push_back(homeworkResult);
             } else {
                 fillingHomework = false;
             }
         }
         
-        student.examResult = Console::getIntegerWithQuestion("Egzamino rez:");
+        examResult = Console::getIntegerWithQuestion("Egzamino rez:");
     }
     
-    return student;
+    return Student(firstName, lastName, homeworkResults, examResult);
 }
 
 void StudentCollection::loadFromConsole(bool useRandom) {
@@ -177,7 +182,7 @@ void StudentCollection::loadFromConsole(bool useRandom) {
         while (filling) {
             Student student = getStudentFromInput();
             
-            if (student.firstName == EXIT_COMMAND) {
+            if (student.getFirstName() == EXIT_COMMAND) {
                 filling = false;
             } else {
                 students.push_back(student);
@@ -192,7 +197,7 @@ void StudentCollection::printResults() {
     table.addRow( { "Vardas", "Pavarde", getFinalResultLabel() } );
     
     for (auto &student : students) {
-        table.addRow( { student.firstName, student.lastName, student.getFinalResult() } );
+        table.addRow( { student.getFirstName(), student.getLastName(), student.getFinalResultString() } );
     }
     
     table.print();
@@ -242,7 +247,7 @@ void StudentCollection::setTypeByFinalResult() {
 
 void StudentCollection::pushByType() {
     for (const auto &student : students) {
-        if (student.finalResult >= 5) {
+        if (student.getFinalResult() >= 5) {
             goodStudents.push_back(student);
         } else {
             badStudents.push_back(student);
@@ -252,7 +257,7 @@ void StudentCollection::pushByType() {
 
 void StudentCollection::moveBadStudents() {
     auto it = std::stable_partition(students.begin(), students.end(), [](Student student) {
-        return student.finalResult < 5;
+        return student.getFinalResult() < 5;
     });
     
     std::move(students.begin(), it, std::back_inserter(badStudents));

@@ -28,6 +28,34 @@
 
 ## Versijų istorija (changelog)
 
+### [v1.1](https://github.com/emilisb/OOP-3/releases/tag/v1.1)
+
+**Pridėta**
+
+- Klasės interfeisas naudoja getter'ius
+- Sukurta nauja repozicija
+
+**Pakeista**
+
+- Perdarytas `Student` klasės konstruktorius
+
+**Programos sparta prieš pakeitimus**
+![](https://i.imgur.com/pAMmctP.png)
+
+**Programos sparta po pakeitimų**
+![](https://i.imgur.com/PdaAVut.png)
+
+**Optimizavimo flagų analizė**
+
+***O1***
+![](https://i.imgur.com/NQlAFUu.png)
+
+***O2***
+![](https://i.imgur.com/K8caUmT.png)
+
+***O3***
+![](https://i.imgur.com/PdaAVut.png)
+
 ### [v1.0](https://github.com/emilisb/OOP-2/releases/tag/v1.0) - (2019-03-25 😔😔😔)
 
 **Pridėta**
@@ -103,4 +131,4 @@
 
 - Pirmoji programos versija
 
-[version-badge]: https://img.shields.io/badge/version-1.0-green.svg
+[version-badge]: https://img.shields.io/badge/version-1.1-green.svg

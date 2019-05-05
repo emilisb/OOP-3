@@ -30,8 +30,7 @@ public:
     
     void setGoodStatus();
     
-    bool operator<(const Student& rhs) const
-    {
+    bool operator<(const Student& rhs) const {
         return firstName < rhs.firstName;
     }
 private:

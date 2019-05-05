@@ -9,8 +9,8 @@
 #define UNITS "ms"
 #define MAX_STUDENTS 100000
 
-#define _CONTAINER_LIST_
-//#define _CONTAINER_DEQUE_
+//#define _CONTAINER_LIST_
+#define _CONTAINER_DEQUE_
 //#define _CONTAINER_VECTOR_
 
 #ifdef _CONTAINER_DEQUE_

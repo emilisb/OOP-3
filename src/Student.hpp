@@ -30,8 +30,28 @@ public:
     
     void setGoodStatus();
     
-    bool operator<(const Student& rhs) const {
+    inline bool operator<(const Student& rhs) const {
+        if (firstName == rhs.firstName) {
+            return lastName < rhs.lastName;
+        }
+        
         return firstName < rhs.firstName;
+    }
+    
+    inline bool operator>(const Student& rhs) const {
+        if (firstName == rhs.firstName) {
+            return lastName > rhs.lastName;
+        }
+        
+        return firstName > rhs.firstName;
+    }
+    
+    inline bool operator==(const Student& rhs) const {
+        return firstName == rhs.firstName && lastName == rhs.lastName;
+    }
+    
+    inline bool operator!=(const Student& rhs) const {
+        return firstName != rhs.firstName || lastName != rhs.lastName;
     }
 private:
     std::string firstName;

@@ -2,12 +2,12 @@
 
 ![version][version-badge]
 
-## [Užduoties sąlyga](https://github.com/objprog/paskaitos2019/wiki/2-oji-užduotis)
+## [Užduoties sąlyga](https://github.com/objprog/paskaitos2019/wiki/3-oji-užduotis)
 
 ## Parsisiuntimas (Unix platformoje)
 
-- `git clone https://github.com/emilisb/OOP-2.git`
-- `cd OOP-2`
+- `git clone https://github.com/emilisb/OOP-3.git`
+- `cd OOP-3`
 
 ## Kompiliavimas
 

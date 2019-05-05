@@ -1,4 +1,4 @@
-#  Duomenų apdorojimas (2 užduotis)
+#  3 užduotis
 
 ![version][version-badge]
 

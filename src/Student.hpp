@@ -1,10 +1,9 @@
-//
-//  Student.hpp
-//  Uzduotis 2
-//
-//  Created by Emilis Baliukonis on 21/02/2019.
-//  Copyright © 2019 Emilis Baliukonis. All rights reserved.
-//
+/**
+ *
+ *   @file Student.hpp
+ *   @brief This is header file for student class.
+ *   It contains all operations related to one student object
+*/
 
 #ifndef Student_hpp
 #define Student_hpp

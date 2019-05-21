@@ -35,9 +35,13 @@ $(BUILD_DIR)/%.cpp.o: %.cpp
 run:
 	$(TARGET_DIR)/$(TARGET_EXEC)
 
+docs:
+	doxygen doxygen
+
 clean:
 	$(RM) -r $(BUILD_DIR)
 	$(RM) -r $(TARGET_DIR)
+	$(RM) -r docs
 
 -include $(DEPS)
 

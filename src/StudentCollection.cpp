@@ -204,7 +204,7 @@ void StudentCollection::printResults() {
 }
 
 void StudentCollection::sortByName() {
-#ifdef _CONTAINER_DEQUE_
+#ifdef _CONTAINER_LIST_
     students.sort();
 #else
     std::sort(students.begin(), students.end());

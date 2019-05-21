@@ -11,16 +11,35 @@
 
 #define EXIT_COMMAND "/q"
 
-#include <vector>
+//#define _CONTAINER_LIST_
+//#define _CONTAINER_DEQUE_
+//#define _CONTAINER_VECTOR_
+#define _CONTAINER_MY_VECTOR_
+
 #include <string>
 #include <fstream>
+#include <deque>
+#include <list>
+#include <vector>
+#include "vector.h"
 
 #include "Student.hpp"
 #include "RandomGenerator.hpp"
 
-typedef std::vector<Student> Collection;
+#ifdef _CONTAINER_DEQUE_
+    #define CONTAINER "Deque"
+    typedef std::deque<Student> Collection;
+#elif defined(_CONTAINER_LIST_)
+    #define CONTAINER "List"
+    typedef std::list<Student> Collection;
+#elif defined(_CONTAINER_VECTOR_)
+    #define CONTAINER "Vector"
+    typedef std::vector<Student> Collection;
+#else
+    #define CONTAINER "My Vector"
+    typedef vector<Student> Collection;
+#endif
 
-using std::vector;
 using std::string;
 
 class StudentCollection {

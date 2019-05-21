@@ -28,6 +28,12 @@
 
 ## Versijų istorija (changelog)
 
+### [v1.2](https://github.com/emilisb/OOP-3/releases/tag/v1.2)
+
+**Pridėta**
+
+- Pridėta daugiau `Student` klasės operatorių
+
 ### [v1.1](https://github.com/emilisb/OOP-3/releases/tag/v1.1)
 
 **Pridėta**

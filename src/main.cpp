@@ -11,12 +11,12 @@
 
 #include <string>
 
-#include "StudentCollection.hpp"
+#include "code/StudentCollection.hpp"
 
-#include "Console/Console.hpp"
-#include "Console/Table.hpp"
-#include "Console/Row.hpp"
-#include "Timer.hpp"
+#include "code/Console/Console.hpp"
+#include "code/Console/Table.hpp"
+#include "code/Console/Row.hpp"
+#include "code/Timer.hpp"
 
 using std::string;
 

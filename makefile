@@ -42,6 +42,10 @@ clean:
 	$(RM) -r $(BUILD_DIR)
 	$(RM) -r $(TARGET_DIR)
 	$(RM) -r docs
+	cd tests && $(MAKE) clean
+
+test:
+	cd tests && $(MAKE) && $(MAKE) run
 
 -include $(DEPS)
 

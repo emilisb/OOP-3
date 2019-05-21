@@ -26,7 +26,22 @@
 - `cd bin`
 - `./uzduotis`
 
+## Konteinerio pakeitimas
+
+- Atsidarykite StudentCollection.hpp failą
+- Užkomentuokite esamą konteinerį ir atkomentuokite norimą
+
 ## Versijų istorija (changelog)
+
+### [v1.5](https://github.com/emilisb/OOP-3/releases/tag/v1.5)
+
+**Pridėta**
+
+- Pridėta abstrakti `Person` klasė
+- Pridėtas custom vektorius iš 4-tos užduoties
+
+**Benchmark su mano vektoriumi**
+![](https://i.imgur.com/NnBiJeJ.png)
 
 ### [v1.2](https://github.com/emilisb/OOP-3/releases/tag/v1.2)
 
@@ -137,4 +152,4 @@
 
 - Pirmoji programos versija
 
-[version-badge]: https://img.shields.io/badge/version-1.1-green.svg
+[version-badge]: https://img.shields.io/badge/version-1.5-green.svg

@@ -12,12 +12,12 @@
 #include <vector>
 #include <string>
 
-class Student {
+#include "Person.hpp"
+
+class Student : public Person {
 public:
-    Student(std::string first, std::string last, std::vector<unsigned int> results, unsigned int exam) : firstName(first), lastName(last), homeworkResults(results), examResult(exam) {}
+    Student(std::string first, std::string last, std::vector<unsigned int> results, unsigned int exam) : Person{first, last}, homeworkResults(results), examResult(exam) {}
     
-    inline std::string getFirstName() const { return firstName; }
-    inline std::string getLastName() const { return lastName; }
     inline std::vector<unsigned int> getHomeworkResults() const { return homeworkResults; }
     inline double getFinalResult() const { return finalResult; }
     inline unsigned int getExamResult() const { return examResult; }
@@ -29,33 +29,7 @@ public:
     void calculateMedian();
     
     void setGoodStatus();
-    
-    inline bool operator<(const Student& rhs) const {
-        if (firstName == rhs.firstName) {
-            return lastName < rhs.lastName;
-        }
-        
-        return firstName < rhs.firstName;
-    }
-    
-    inline bool operator>(const Student& rhs) const {
-        if (firstName == rhs.firstName) {
-            return lastName > rhs.lastName;
-        }
-        
-        return firstName > rhs.firstName;
-    }
-    
-    inline bool operator==(const Student& rhs) const {
-        return firstName == rhs.firstName && lastName == rhs.lastName;
-    }
-    
-    inline bool operator!=(const Student& rhs) const {
-        return firstName != rhs.firstName || lastName != rhs.lastName;
-    }
 private:
-    std::string firstName;
-    std::string lastName;
     std::vector<unsigned int> homeworkResults;
     
     double finalResult = 0;

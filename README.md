@@ -26,12 +26,27 @@
 - `cd bin`
 - `./uzduotis`
 
+## Unit testų paleidimas (reikalingas Google Test)
+
+- `make test`
+
+## Dokumentacijos sugeneravimas (reikalingas Doxygen)
+
+- `make docs`
+
 ## Konteinerio pakeitimas
 
 - Atsidarykite StudentCollection.hpp failą
 - Užkomentuokite esamą konteinerį ir atkomentuokite norimą
 
 ## Versijų istorija (changelog)
+
+### [v2.0](https://github.com/emilisb/OOP-3/releases/tag/v2.0)
+
+**Pridėta**
+
+- Pridėta Doxygen dokumentacija
+- Pridėti Google Test unit testai
 
 ### [v1.5](https://github.com/emilisb/OOP-3/releases/tag/v1.5)
 
@@ -152,4 +167,4 @@
 
 - Pirmoji programos versija
 
-[version-badge]: https://img.shields.io/badge/version-1.5-green.svg
+[version-badge]: https://img.shields.io/badge/version-2.0-green.svg
